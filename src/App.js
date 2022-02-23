@@ -1,10 +1,57 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Cookies from "js-cookie";
+
+import Homepage from "./containers/Homepage";
+import Header from "./containers/Header";
+import Login from "./containers/Login";
+import SignUp from "./containers/SignUp";
 
 function App() {
+  const serverUrl = "http://localhost:4000";
+  const [userToken, setUserToken] = useState(Cookies.get("token") || null);
+
+  // will use this function to get connection token and log in/out the user with cookies
+  const setConnected = (token) => {
+    if (token) {
+      setUserToken(Cookies.set("token", token));
+    } else {
+      setUserToken(null);
+      Cookies.remove("token");
+    }
+  };
+
   return (
-    <div>
-      Hello from <a href="https://www.lereacteur.io">Le Reacteur !</a>
-    </div>
+    <Router>
+      <Header userToken={userToken} setConnected={setConnected} />
+      <Routes>
+        <Route
+          path="/"
+          element={<Homepage serverUrl={serverUrl} userToken={userToken} />}
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              serverUrl={serverUrl}
+              setConnected={setConnected}
+              userToken={userToken}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <SignUp
+              serverUrl={serverUrl}
+              setConnected={setConnected}
+              userToken={userToken}
+            />
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
