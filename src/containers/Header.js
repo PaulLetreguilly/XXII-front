@@ -11,7 +11,13 @@ const Header = ({ userToken, setConnected }) => {
       >
         users
       </div>
-      <div>my videos</div>
+      <div
+        onClick={() => {
+          navigate("/myvideos");
+        }}
+      >
+        my videos
+      </div>
 
       {/* if user is connected disconnect button will appear in header, otherwise sign up / log in button will appear */}
       {!userToken ? (
@@ -32,13 +38,22 @@ const Header = ({ userToken, setConnected }) => {
           </div>
         </div>
       ) : (
-        <div
-          onClick={() => {
-            setConnected(null);
-          }}
-          style={{ color: "red" }}
-        >
-          disconnect
+        <div>
+          <div
+            onClick={() => {
+              navigate("/myprofile");
+            }}
+          >
+            my profile
+          </div>
+          <div
+            onClick={() => {
+              setConnected(null);
+            }}
+            style={{ color: "red" }}
+          >
+            disconnect
+          </div>
         </div>
       )}
       {/* <div

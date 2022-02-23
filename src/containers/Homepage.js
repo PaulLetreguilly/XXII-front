@@ -9,7 +9,7 @@ const Homepage = ({ serverUrl }) => {
     const abortCont = new AbortController();
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/user`);
+        const response = await axios.get(`${serverUrl}/users`);
         console.log(response.data);
         setIsLoading(false);
         setData(response.data);
@@ -34,7 +34,7 @@ const Homepage = ({ serverUrl }) => {
       <h2>Homepage</h2>
       <div>
         <span style={{ fontWeight: "bold" }}>list of users : </span>
-        {data.map((user) => {
+        {data?.map((user) => {
           return <div key={user._id}>{user.username}</div>;
         })}
       </div>

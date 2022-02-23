@@ -7,6 +7,8 @@ import Homepage from "./containers/Homepage";
 import Header from "./containers/Header";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
+import MyVideos from "./containers/MyVideos";
+import Profile from "./containers/Profile";
 
 function App() {
   const serverUrl = "http://localhost:4000";
@@ -49,6 +51,14 @@ function App() {
               userToken={userToken}
             />
           }
+        />
+        <Route
+          path="/myvideos"
+          element={<MyVideos userToken={userToken} serverUrl={serverUrl} />}
+        />
+        <Route
+          path="/myprofile"
+          element={<Profile userToken={userToken} serverUrl={serverUrl} />}
         />
       </Routes>
     </Router>
