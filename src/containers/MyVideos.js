@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import VideoPlayer from "../components/VideoPlayer";
 
 const MyVideos = ({ serverUrl, userToken }) => {
   const [isUploading, setisUploading] = useState(false);
@@ -42,8 +43,9 @@ const MyVideos = ({ serverUrl, userToken }) => {
       const upload = await axios.post(`${serverUrl}/upload`, formData, {
         headers: { Authorization: "Bearer " + userToken },
       });
-      console.log(upload.data);
+      //   console.log(upload.data);
       setRefresh(!refresh);
+      setisUploading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -95,7 +97,13 @@ const MyVideos = ({ serverUrl, userToken }) => {
             return (
               <div key={vid._id}>
                 <div>video number : {index + 1}</div>
-                <div>video name : {vid.title}</div>
+                <VideoPlayer
+                  serverUrl={serverUrl}
+                  setRefresh={setRefresh}
+                  vid={vid}
+                  userToken={userToken}
+                  refresh={refresh}
+                />
               </div>
             );
           })}
