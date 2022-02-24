@@ -20,7 +20,7 @@ import Profile from "./containers/Profile";
 library.add(faArrowDown, faArrowUp, faPerson);
 
 function App() {
-  const serverUrl = "https://backend-vod.herokuapp.com/";
+  const serverUrl = "https://backend-vod.herokuapp.com";
   // const serverUrl = "http://localhost:4000";
   const [userToken, setUserToken] = useState(Cookies.get("token") || null);
 

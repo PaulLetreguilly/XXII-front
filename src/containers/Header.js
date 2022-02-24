@@ -56,20 +56,6 @@ const Header = ({ userToken, setConnected }) => {
           </div>
         </div>
       )}
-      {/* <div
-        onClick={() => {
-          navigate("/signup");
-        }}
-      >
-        s'inscrire
-      </div>
-      <div
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        se connecter
-      </div> */}
     </section>
   );
 };

@@ -20,7 +20,6 @@ const Login = ({ serverUrl, setConnected, userToken }) => {
     if (email && password) {
       try {
         const response = await axios.post(`${serverUrl}/login`, body);
-        // console.log(response.data);
         setConnected(response.data.token);
       } catch (error) {
         console.log(error.message);

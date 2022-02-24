@@ -26,7 +26,6 @@ const SignUp = ({ serverUrl, setConnected, userToken }) => {
       if (password === confirmPassword) {
         try {
           const response = await axios.post(`${serverUrl}/signup`, body);
-          console.log(response.data);
           setConnected(response.data.token);
         } catch (error) {
           if (error.name === "AbortError") {

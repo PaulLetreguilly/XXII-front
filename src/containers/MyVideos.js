@@ -14,7 +14,6 @@ const MyVideos = ({ serverUrl, userToken }) => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("test : ", location);
 
   useEffect(() => {
     if (!userToken) {
@@ -30,16 +29,9 @@ const MyVideos = ({ serverUrl, userToken }) => {
           const videos = await axios.get(`${serverUrl}/myvideos`, {
             headers: { Authorization: "Bearer " + userToken },
           });
-          // console.log(videos.data);
           setData(videos.data);
           setIsLoading(false);
         }
-        // const videos = await axios.get(`${serverUrl}/myvideos`, {
-        //   headers: { Authorization: "Bearer " + userToken },
-        // });
-        // // console.log(videos.data);
-        // setData(videos.data);
-        // setIsLoading(false);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("fetch aborted");
@@ -64,7 +56,6 @@ const MyVideos = ({ serverUrl, userToken }) => {
       const upload = await axios.post(`${serverUrl}/upload`, formData, {
         headers: { Authorization: "Bearer " + userToken },
       });
-      //   console.log(upload.data);
       setRefresh(!refresh);
       setisUploading(false);
     } catch (error) {

@@ -19,7 +19,6 @@ const VideoPlayer = ({
   const [modal, setModal] = useState(false);
 
   const body = { id: vid._id };
-  console.log(pathname);
 
   //   only if we changed title or description
   if (title !== vid.title) {
@@ -34,7 +33,6 @@ const VideoPlayer = ({
       const update = await axios.post(`${serverUrl}/update/video`, body, {
         headers: { Authorization: "Bearer " + userToken },
       });
-      //   console.log(update.data);
       setModify(false);
       setRefresh(!refresh);
     } catch (error) {
@@ -71,7 +69,6 @@ const VideoPlayer = ({
     try {
       const body = { id: vid._id };
       const view = await axios.post(`${serverUrl}/video/views`, body);
-      //   console.log(view.data)
       setRefresh(!refresh);
     } catch (error) {
       console.log(error.message);
@@ -113,7 +110,6 @@ const VideoPlayer = ({
         <ReactPlayer
           url={vid.url}
           onStart={() => {
-            // console.log("test");
             viewCounter();
           }}
           controls={true}
@@ -136,7 +132,6 @@ const VideoPlayer = ({
           className="like"
           onClick={() => {
             likeIt();
-            // setRefresh(!refresh);
           }}
         >
           <FontAwesomeIcon icon="arrow-up" /> {vid.like.length}
@@ -145,7 +140,6 @@ const VideoPlayer = ({
           className="dislike"
           onClick={() => {
             dontLikeIt();
-            // setRefresh(!refresh);
           }}
         >
           <FontAwesomeIcon icon="arrow-down" /> {vid.dislike.length}

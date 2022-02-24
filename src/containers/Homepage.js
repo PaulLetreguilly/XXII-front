@@ -65,13 +65,6 @@ const Homepage = ({ serverUrl, userToken }) => {
               <div key={user._id}>
                 <div>{user.username}</div>
                 <div>number of videos : {user.videos.length}</div>
-                {/* <div
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  see {user.username}'s videos !
-                </div> */}
               </div>
             );
           })}
@@ -99,12 +92,3 @@ const Homepage = ({ serverUrl, userToken }) => {
 };
 
 export default Homepage;
-
-{
-  /* <div>
-        <span style={{ fontWeight: "bold" }}>list of users : </span>
-        {data?.map((user) => {
-          return <div key={user._id}>{user.username}</div>;
-        })}
-      </div> */
-}
