@@ -1,14 +1,25 @@
 import ReactPlayer from "react-player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const VideoPlayer = ({ serverUrl, setRefresh, vid, userToken, refresh }) => {
+const VideoPlayer = ({
+  serverUrl,
+  setRefresh,
+  vid,
+  userToken,
+  refresh,
+  pathname,
+}) => {
   const [play, setPlay] = useState(false);
   const [modify, setModify] = useState(false);
   const [title, setTitle] = useState(vid.title);
   const [description, setDescription] = useState(vid.description);
+  const [modal, setModal] = useState(false);
 
   const body = { id: vid._id };
+  console.log(pathname);
 
   //   only if we changed title or description
   if (title !== vid.title) {
@@ -26,6 +37,52 @@ const VideoPlayer = ({ serverUrl, setRefresh, vid, userToken, refresh }) => {
       //   console.log(update.data);
       setModify(false);
       setRefresh(!refresh);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const likeIt = async () => {
+    try {
+      const body = { like: true, id: vid._id };
+      const like = await axios.post(`${serverUrl}/video/like`, body, {
+        headers: { Authorization: "Bearer " + userToken },
+      });
+
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const dontLikeIt = async () => {
+    try {
+      const body = { dislike: true, id: vid._id };
+      const like = await axios.post(`${serverUrl}/video/like`, body, {
+        headers: { Authorization: "Bearer " + userToken },
+      });
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const viewCounter = async () => {
+    try {
+      const body = { id: vid._id };
+      const view = await axios.post(`${serverUrl}/video/views`, body);
+      //   console.log(view.data)
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteVideo = async () => {
+    try {
+      const deleteIt = await axios.post(`${serverUrl}/video/delete`, {
+        id: vid._id,
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -52,39 +109,98 @@ const VideoPlayer = ({ serverUrl, setRefresh, vid, userToken, refresh }) => {
           <span>{vid.title}</span>
         )}
       </div>
-      <ReactPlayer
-        url={vid.url}
-        onClick={() => {
-          setPlay(!play);
-        }}
-        playing={play}
-        controls={true}
-      />
       <div>
-        description :{" "}
-        {modify ? (
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-          />
-        ) : (
-          <span>{vid.description}</span>
-        )}
-      </div>
-      {modify ? (
-        <input type="submit" value="send" />
-      ) : (
-        <button
+        <ReactPlayer
+          url={vid.url}
+          onStart={() => {
+            // console.log("test");
+            viewCounter();
+          }}
+          controls={true}
+        />
+        <div>
+          description :{" "}
+          {modify ? (
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            />
+          ) : (
+            <span>{vid.description}</span>
+          )}
+        </div>
+        <span
+          className="like"
           onClick={() => {
-            setModify(true);
+            likeIt();
+            // setRefresh(!refresh);
           }}
         >
-          update
-        </button>
-      )}
+          <FontAwesomeIcon icon="arrow-up" /> {vid.like.length}
+        </span>
+        <span
+          className="dislike"
+          onClick={() => {
+            dontLikeIt();
+            // setRefresh(!refresh);
+          }}
+        >
+          <FontAwesomeIcon icon="arrow-down" /> {vid.dislike.length}
+        </span>
+        <span>
+          <FontAwesomeIcon icon="person" /> {vid.view}
+        </span>
+        {pathname === "/myvideos" && (
+          <div>
+            {modify ? (
+              <input type="submit" value="send" />
+            ) : (
+              <button
+                onClick={() => {
+                  setModify(true);
+                }}
+              >
+                update
+              </button>
+            )}
+            {modify && (
+              <div
+                onClick={() => {
+                  setModal(true);
+                }}
+              >
+                {" "}
+                X{" "}
+              </div>
+            )}
+            {modal && (
+              <div>
+                Are you sure you want to delete this video ?{" "}
+                <button
+                  onClick={() => {
+                    setModify(false);
+                    deleteVideo();
+                    setRefresh(!refresh);
+                  }}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => {
+                    setModal(false);
+                  }}
+                >
+                  No
+                </button>{" "}
+                Maybe... I don't know
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </form>
   );
 };

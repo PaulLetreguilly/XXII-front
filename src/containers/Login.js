@@ -64,6 +64,13 @@ const Login = ({ serverUrl, setConnected, userToken }) => {
         />
         <div style={{ color: "red" }}>{error}</div>
         <input type="submit" value="send" />
+        <div
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          Not a member yet? Click here !
+        </div>
       </form>
     </section>
   );

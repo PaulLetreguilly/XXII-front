@@ -103,6 +103,13 @@ const SignUp = ({ serverUrl, setConnected, userToken }) => {
         />
         <div style={{ color: "red" }}>{error}</div>
         <input type="submit" value="send" />
+        <div
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Already got an account? Click here !
+        </div>
       </form>
     </section>
   );

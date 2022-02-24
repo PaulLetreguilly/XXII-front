@@ -2,7 +2,13 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
-import ReactPlayer from "react-player";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faArrowDown,
+  faArrowUp,
+  faPerson,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Homepage from "./containers/Homepage";
 import Header from "./containers/Header";
@@ -11,8 +17,11 @@ import SignUp from "./containers/SignUp";
 import MyVideos from "./containers/MyVideos";
 import Profile from "./containers/Profile";
 
+library.add(faArrowDown, faArrowUp, faPerson);
+
 function App() {
-  const serverUrl = "http://localhost:4000";
+  const serverUrl = "https://backend-vod.herokuapp.com/";
+  // const serverUrl = "http://localhost:4000";
   const [userToken, setUserToken] = useState(Cookies.get("token") || null);
 
   // will use this function to get connection token and log in/out the user with cookies

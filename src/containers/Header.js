@@ -9,7 +9,7 @@ const Header = ({ userToken, setConnected }) => {
           navigate("/");
         }}
       >
-        users
+        Home
       </div>
       <div
         onClick={() => {

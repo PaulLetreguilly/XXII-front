@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import VideoPlayer from "../components/VideoPlayer";
 
 const MyVideos = ({ serverUrl, userToken }) => {
@@ -9,16 +10,36 @@ const MyVideos = ({ serverUrl, userToken }) => {
   const [file, setFile] = useState();
   const [data, setData] = useState();
   const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log("test : ", location);
+
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/login");
+    }
+  }, [userToken]);
 
   useEffect(() => {
     const abortCont = new AbortController();
     const fetchvideos = async () => {
       try {
-        const videos = await axios.get(`${serverUrl}/myvideos`, {
-          headers: { Authorization: "Bearer " + userToken },
-        });
-        // console.log(videos.data);
-        setData(videos.data);
+        if (userToken) {
+          const videos = await axios.get(`${serverUrl}/myvideos`, {
+            headers: { Authorization: "Bearer " + userToken },
+          });
+          // console.log(videos.data);
+          setData(videos.data);
+          setIsLoading(false);
+        }
+        // const videos = await axios.get(`${serverUrl}/myvideos`, {
+        //   headers: { Authorization: "Bearer " + userToken },
+        // });
+        // // console.log(videos.data);
+        // setData(videos.data);
+        // setIsLoading(false);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("fetch aborted");
@@ -51,7 +72,9 @@ const MyVideos = ({ serverUrl, userToken }) => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <div>Loading ...</div>
+  ) : (
     <section>
       <h2>My Videos</h2>
       <div
@@ -103,6 +126,7 @@ const MyVideos = ({ serverUrl, userToken }) => {
                   vid={vid}
                   userToken={userToken}
                   refresh={refresh}
+                  pathname={location.pathname}
                 />
               </div>
             );
