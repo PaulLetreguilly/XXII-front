@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import VideoPlayer from "../components/VideoPlayer";
 import { useLocation } from "react-router";
 
-const Homepage = ({ serverUrl, userToken }) => {
+const Homepage = ({ serverUrl, userToken, userId }) => {
   const [dataUsers, setDataUsers] = useState();
   const [dataVideos, setDataVideos] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -42,27 +42,31 @@ const Homepage = ({ serverUrl, userToken }) => {
   return isLoading ? (
     <div>Loading ...</div>
   ) : (
-    <section>
-      <h2>Homepage</h2>
-      <span
-        onClick={() => {
-          setUsers(false);
-        }}
-      >
-        Video list
-      </span>
-      <span
-        onClick={() => {
-          setUsers(true);
-        }}
-      >
-        User list
-      </span>
+    <section className="container home">
+      <div className="switch">
+        <span
+          className={`btn ${users ? null : "blue"}`}
+          onClick={() => {
+            setUsers(false);
+          }}
+        >
+          Video list
+        </span>
+        <span
+          className={`btn ${users ? "blue" : null}`}
+          onClick={() => {
+            setUsers(true);
+          }}
+        >
+          User list
+        </span>
+      </div>
+
       {users ? (
-        <section>
+        <section className="contain-list">
           {dataUsers?.map((user) => {
             return (
-              <div key={user._id}>
+              <div key={user._id} className="user">
                 <div>{user.username}</div>
                 <div>number of videos : {user.videos.length}</div>
               </div>
@@ -70,11 +74,12 @@ const Homepage = ({ serverUrl, userToken }) => {
           })}
         </section>
       ) : (
-        <section>
+        <section className="contain-vid">
           {dataVideos.map((video) => {
             return (
-              <div key={video._id}>
+              <div key={video._id} className="video">
                 <VideoPlayer
+                  userId={userId}
                   serverUrl={serverUrl}
                   setRefresh={setRefresh}
                   vid={video}

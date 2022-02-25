@@ -23,14 +23,18 @@ function App() {
   const serverUrl = "https://backend-vod.herokuapp.com";
   // const serverUrl = "http://localhost:4000";
   const [userToken, setUserToken] = useState(Cookies.get("token") || null);
+  const [userId, setUserId] = useState(Cookies.get("userId") || null);
 
   // will use this function to get connection token and log in/out the user with cookies
-  const setConnected = (token) => {
+  const setConnected = (token, id) => {
     if (token) {
-      setUserToken(Cookies.set("token", token));
+      setUserToken(Cookies.set("token", token, { expires: 7 }));
+      setUserId(Cookies.set("userId", id, { expires: 7 }));
     } else {
       setUserToken(null);
       Cookies.remove("token");
+      setUserId(null);
+      Cookies.remove("userId");
     }
   };
 
@@ -40,7 +44,13 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Homepage serverUrl={serverUrl} userToken={userToken} />}
+          element={
+            <Homepage
+              userId={userId}
+              serverUrl={serverUrl}
+              userToken={userToken}
+            />
+          }
         />
         <Route
           path="/login"
@@ -64,7 +74,13 @@ function App() {
         />
         <Route
           path="/myvideos"
-          element={<MyVideos userToken={userToken} serverUrl={serverUrl} />}
+          element={
+            <MyVideos
+              userToken={userToken}
+              serverUrl={serverUrl}
+              userId={userId}
+            />
+          }
         />
         <Route
           path="/myprofile"

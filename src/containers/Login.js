@@ -20,7 +20,7 @@ const Login = ({ serverUrl, setConnected, userToken }) => {
     if (email && password) {
       try {
         const response = await axios.post(`${serverUrl}/login`, body);
-        setConnected(response.data.token);
+        setConnected(response.data.token, response.data._id);
       } catch (error) {
         console.log(error.message);
         if (
@@ -36,8 +36,8 @@ const Login = ({ serverUrl, setConnected, userToken }) => {
   };
 
   return (
-    <section>
-      <h2>LogIn</h2>
+    <section className="contain-log">
+      <h2>Log in</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -62,8 +62,9 @@ const Login = ({ serverUrl, setConnected, userToken }) => {
           type="password"
         />
         <div style={{ color: "red" }}>{error}</div>
-        <input type="submit" value="send" />
+        <input type="submit" className="btn" value="send" />
         <div
+          className="btn"
           onClick={() => {
             navigate("/signup");
           }}

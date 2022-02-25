@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import VideoPlayer from "../components/VideoPlayer";
 
-const MyVideos = ({ serverUrl, userToken }) => {
+const MyVideos = ({ serverUrl, userToken, userId }) => {
   const [isUploading, setisUploading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -35,6 +35,8 @@ const MyVideos = ({ serverUrl, userToken }) => {
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("fetch aborted");
+        } else if (error.response.status === 401) {
+          window.location.reload(true);
         } else {
           console.log(error.message);
         }
@@ -66,10 +68,11 @@ const MyVideos = ({ serverUrl, userToken }) => {
   return isLoading ? (
     <div>Loading ...</div>
   ) : (
-    <section>
+    <section className="contain-video">
       <h2>My Videos</h2>
       <div
-        style={{ color: "blue", margin: "20px 0" }}
+        className="btn upload"
+        style={{ color: "#24b0da", margin: "20px 0" }}
         onClick={() => {
           setisUploading(!isUploading);
         }}
@@ -84,19 +87,23 @@ const MyVideos = ({ serverUrl, userToken }) => {
           }}
         >
           <input
+            className="file"
             type="file"
             onChange={(e) => {
               setFile(e.target.files[0]);
             }}
           />
           <input
+            className="title"
             placeholder="title"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             type="text"
           />
           <textarea
+            className="description"
             name="description"
+            placeholder="description"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             cols="30"
@@ -107,21 +114,24 @@ const MyVideos = ({ serverUrl, userToken }) => {
       ) : (
         <div>
           <div>number of videos : {data?.length}</div>
-          {data?.map((vid, index) => {
-            return (
-              <div key={vid._id}>
-                <div>video number : {index + 1}</div>
-                <VideoPlayer
-                  serverUrl={serverUrl}
-                  setRefresh={setRefresh}
-                  vid={vid}
-                  userToken={userToken}
-                  refresh={refresh}
-                  pathname={location.pathname}
-                />
-              </div>
-            );
-          })}
+          <div className="videos">
+            {data?.map((vid, index) => {
+              return (
+                <div key={vid._id} className="myvideos">
+                  <div>video number : {index + 1}</div>
+                  <VideoPlayer
+                    userId={userId}
+                    serverUrl={serverUrl}
+                    setRefresh={setRefresh}
+                    vid={vid}
+                    userToken={userToken}
+                    refresh={refresh}
+                    pathname={location.pathname}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </section>

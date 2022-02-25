@@ -26,7 +26,7 @@ const SignUp = ({ serverUrl, setConnected, userToken }) => {
       if (password === confirmPassword) {
         try {
           const response = await axios.post(`${serverUrl}/signup`, body);
-          setConnected(response.data.token);
+          setConnected(response.data.token, response.data._id);
         } catch (error) {
           if (error.name === "AbortError") {
             console.log("fetch aborted");
@@ -43,8 +43,8 @@ const SignUp = ({ serverUrl, setConnected, userToken }) => {
   };
 
   return (
-    <section>
-      <h2>SignUp</h2>
+    <section className="contain-sign">
+      <h2>Sign up</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -101,8 +101,9 @@ const SignUp = ({ serverUrl, setConnected, userToken }) => {
           placeholder="confirm password"
         />
         <div style={{ color: "red" }}>{error}</div>
-        <input type="submit" value="send" />
+        <input type="submit" className="btn" value="send" />
         <div
+          className="btn"
           onClick={() => {
             navigate("/login");
           }}

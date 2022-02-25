@@ -42,10 +42,20 @@ const Profile = ({ serverUrl, userToken }) => {
   useEffect(() => {
     const abortCont = new AbortController();
     const fetchUserData = async () => {
-      const userData = await axios.get(`${serverUrl}/user`, {
-        headers: { Authorization: "Bearer " + userToken },
-      });
-      setData(userData.data);
+      try {
+        const userData = await axios.get(`${serverUrl}/user`, {
+          headers: { Authorization: "Bearer " + userToken },
+        });
+        setData(userData.data);
+      } catch (error) {
+        if (error.response.status === 401) {
+          window.location.reload(true);
+        } else if (error.name === "AbortError") {
+          console.log("fetch aborted");
+        } else {
+          console.log(error.message);
+        }
+      }
     };
     fetchUserData({ signal: abortCont.signal });
     return () => {
@@ -78,7 +88,7 @@ const Profile = ({ serverUrl, userToken }) => {
   };
 
   return (
-    <section>
+    <section className="contain-profile">
       <h2>My profile</h2>
       <div>
         <div>name : {data?.name}</div>
@@ -88,7 +98,8 @@ const Profile = ({ serverUrl, userToken }) => {
         {/* <div>{data?.password}</div> */}
       </div>
       <div
-        style={{ color: "blue", margin: "20px 0" }}
+        className="btn"
+        style={{ color: "#24b0da", margin: "20px 0" }}
         onClick={() => {
           setUpdating(!updating);
         }}
@@ -150,7 +161,7 @@ const Profile = ({ serverUrl, userToken }) => {
           value={confirmPassword}
           type="password"
         />
-        <input value="update" type="submit" />
+        <input value="update" className="btn" type="submit" />
       </form>
     </section>
   );

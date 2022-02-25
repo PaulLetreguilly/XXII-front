@@ -1,17 +1,21 @@
 import { useNavigate } from "react-router";
+import Logo from "../assets/logo-png.png";
 
 const Header = ({ userToken, setConnected }) => {
   const navigate = useNavigate();
   return (
-    <section>
+    <section className="header">
       <div
+        className="logo btn"
         onClick={() => {
           navigate("/");
         }}
       >
-        Home
+        <img src={Logo} alt="" />
+        Mytube
       </div>
       <div
+        className="btn header-mid"
         onClick={() => {
           navigate("/myvideos");
         }}
@@ -21,8 +25,9 @@ const Header = ({ userToken, setConnected }) => {
 
       {/* if user is connected disconnect button will appear in header, otherwise sign up / log in button will appear */}
       {!userToken ? (
-        <div>
+        <div className="header-right">
           <div
+            className="btn"
             onClick={() => {
               navigate("/signup");
             }}
@@ -30,6 +35,7 @@ const Header = ({ userToken, setConnected }) => {
             sign up
           </div>
           <div
+            className="btn"
             onClick={() => {
               navigate("/login");
             }}
@@ -38,8 +44,9 @@ const Header = ({ userToken, setConnected }) => {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="header-right">
           <div
+            className="btn"
             onClick={() => {
               navigate("/myprofile");
             }}
@@ -47,10 +54,11 @@ const Header = ({ userToken, setConnected }) => {
             my profile
           </div>
           <div
+            className="btn"
             onClick={() => {
               setConnected(null);
             }}
-            style={{ color: "red" }}
+            style={{ color: "#fe4555" }}
           >
             disconnect
           </div>

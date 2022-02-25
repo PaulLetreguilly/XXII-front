@@ -1,11 +1,276 @@
 /* Other rules */
 
-.like {
-  padding: 1px 2px;
-  margin: 1px 3px;
+body {
+  margin: 0 auto;
+  background-color: #13171c;
+  color: white;
+}
+.btn:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2.5% 1%;
 }
 
+/*----------- HEADER ------------*/
+
+.header {
+  width: 80%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  padding: 1% 10%;
+  border-bottom: white 1px solid;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+.logo img {
+  width: 5%;
+  background-color: white;
+  padding: 0.5px 0.5px;
+  margin-right: 2%;
+}
+.header-right {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+  margin-left: 25%;
+}
+.header-mid {
+  width: 15%;
+}
+
+/* ***********  Homepage  *********** */
+
+.switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+}
+.switch span {
+  padding: 2% 2%;
+}
+.blue {
+  color: #24b0da;
+}
+
+/* video part */
+.contain-vid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.video {
+  width: 40%;
+  margin: 2% 5%;
+}
+/* description + like/dislike and views */
+.under-vid {
+  display: flex;
+  justify-content: space-between;
+}
+.under-vid > div:first-child {
+  width: 68%;
+  padding: 2% 1%;
+}
+.under-vid > div:last-child {
+  width: 28%;
+  padding: 1%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* like/dislike buttons */
+.like,
 .dislike {
-  padding: 1px 2px;
+  padding: 5px 8px;
   margin: 1px 3px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+/* user list */
+.contain-list {
+  width: 80%;
+  margin: auto 0;
+  padding-top: 5%;
+}
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin-left: 30%;
+  padding: 1% 2%;
+}
+
+/* ----------------  Profile page  --------------- */
+
+.contain-profile {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contain-profile form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.contain-profile input {
+  padding: 2% 2%;
+  margin: 4% 2%;
+}
+.contain-profile input:not(:last-child) {
+  width: 25vw;
+}
+.contain-profile input:last-child {
+  width: 15vw;
+}
+
+/* ------------------   Log in   ------------------ */
+
+.contain-log {
+  width: 90%;
+  margin: 0 auto;
+}
+.contain-log h2 {
+  text-align: center;
+  margin-top: 5%;
+}
+.contain-log form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.contain-log input {
+  padding: 0.5% 0.5%;
+  margin: 3% 2%;
+}
+.contain-log input:not(:last-child) {
+  width: 25%;
+}
+
+/* ------------------   Sign up   ------------------ */
+
+.contain-sign {
+  width: 90%;
+  margin: 0 auto;
+}
+.contain-sign h2 {
+  text-align: center;
+  margin-top: 5%;
+}
+.contain-sign form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.contain-sign input {
+  padding: 0.5% 0.5%;
+  margin: 1.5% 2%;
+}
+.contain-sign input:not(:last-child) {
+  width: 25%;
+}
+
+/* ------------------   my videos page   ------------------ */
+
+.contain-video {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.contain-video h2,
+.upload {
+  text-align: center;
+}
+.contain-video > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  width: 19%;
+}
+.title,
+.file,
+.description {
+  margin: 1% 1%;
+}
+
+.videos {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.myvideos {
+  width: 40%;
+  margin: 2% 5%;
+}
+.form-vid {
+  position: relative;
+}
+.update {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 12%;
+}
+.modal {
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  background-color: white;
+  color: black;
+  width: 50%;
+  padding: 1% 1%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.validation {
+  width: 60%;
+}
+.val {
+  width: 25%;
+  margin: 2% 5%;
+}
+.video-title {
+  width: 40%;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 425px) {
+  body {
+    font-size: 14px;
+  }
+  .logo img {
+    width: 20%;
+  }
+  .video,
+  .myvideos {
+    width: 100%;
+  }
 }
