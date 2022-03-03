@@ -92,3 +92,9 @@ function App() {
 }
 
 export default App;
+
+// Have to add a to do list to upgrade the app :
+
+// To Do :
+
+// on progress...
