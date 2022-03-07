@@ -97,6 +97,6 @@ export default App;
 
 // To Do :
 
-// visible password buttons
+// visible password button
 
 // on progress...
